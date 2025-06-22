@@ -3,12 +3,13 @@
   "name": "YouTube Playlist Cleaner",
   "version": "1.0",
   "description": "Removes '&list=' and anything after it from YouTube watch URLs.",
-  "permissions": ["tabs", "webNavigation"],
+  "permissions": ["tabs", "webNavigation","storage"],
   "host_permissions": ["*://www.youtube.com/*"],
   "background": {
     "service_worker": "background.js"
   },
   "action": {
+    "default_popup": "popup.html",
     "default_title": "YouTube Cleaner",
     "default_icon": {
       "16": "icon16.png",

@@ -1,0 +1,107 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>YouTube URL Cleaner</title>
+  <style>
+    body {
+      font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
+      background: #2f2f2f; /* dark grey background */
+      margin: 0;
+      padding: 20px 25px;
+      width: 200px;
+      box-sizing: border-box;
+      color: #eee; /* light text */
+      border-radius: 16px; /* rounded edges on popup */
+      /* Important for rounded edges in Chrome/Edge popups */
+      overflow: hidden;
+    }
+
+    .toggle-container {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      background: #444; /* slightly lighter dark background */
+      padding: 15px 20px;
+      border-radius: 12px;
+      box-shadow: 0 2px 5px rgba(0,0,0,0.6);
+      user-select: none;
+      cursor: pointer;
+      transition: background 0.3s ease;
+    }
+    .toggle-container:hover {
+      background: #555;
+    }
+
+    label {
+      font-size: 14px;
+      font-weight: 500;
+      color: #eee;
+      flex: 1;
+      cursor: pointer;
+    }
+
+    /* Stylish toggle switch */
+    .switch {
+      position: relative;
+      display: inline-block;
+      width: 48px;
+      height: 26px;
+      flex-shrink: 0;
+    }
+
+    .switch input {
+      opacity: 0;
+      width: 0;
+      height: 0;
+    }
+
+    .slider {
+      position: absolute;
+      cursor: pointer;
+      top: 0;
+      left: 0;
+      right: 0;
+      bottom: 0;
+      background-color: #999;
+      border-radius: 26px;
+      transition: 0.4s;
+      box-shadow: inset 0 0 5px rgba(0,0,0,0.3);
+    }
+
+    .slider:before {
+      position: absolute;
+      content: "";
+      height: 20px;
+      width: 20px;
+      bottom: 3px;
+      background-color: #eee;
+      border-radius: 50%;
+      transition: 0.4s;
+      box-shadow: 0 1px 3px rgba(0,0,0,0.5);
+      transform: translateX(3px);
+    }
+
+    input:checked + .slider {
+      background-color: #ff0000;
+      box-shadow: 0 0 8px #ff4d4d;
+    }
+
+    input:checked + .slider:before {
+      transform: translateX(31px);
+    }
+  </style>
+</head>
+<body>
+  <div class="toggle-container" id="toggle-wrapper">
+    <label for="toggle-cleaner">Enable Cleaner</label>
+    <label class="switch">
+      <input type="checkbox" id="toggle-cleaner" />
+      <span class="slider"></span>
+    </label>
+  </div>
+
+  <script src="popup.js"></script>
+</body>
+</html>
