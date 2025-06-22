@@ -1,14 +1,33 @@
-chrome.webNavigation.onCompleted.addListener((details) => {
+// background.js
+
+function cleanYouTubeUrl(details) {
   const url = new URL(details.url);
 
-  // Only affect youtube.com/watch pages
   if (url.hostname === "www.youtube.com" && url.pathname === "/watch") {
-    const listIndex = url.href.indexOf("&list=");
-    if (listIndex !== -1) {
-      // Strip off '&list=' and everything after it
-      const cleanUrl = url.href.substring(0, listIndex);
+    const searchParams = url.searchParams;
 
-      chrome.tabs.update(details.tabId, { url: cleanUrl });
+    // Check if URL contains 'radio' anywhere (path or params)
+    const hasRadio = url.href.includes("radio");
+
+    if (searchParams.has("list") && hasRadio) {
+      searchParams.delete("list");
+
+      const cleanUrl = `${url.origin}${url.pathname}`;
+      const paramsString = searchParams.toString();
+
+      const newUrl = paramsString ? `${cleanUrl}?${paramsString}` : cleanUrl;
+
+      if (newUrl !== details.url) {
+        chrome.tabs.update(details.tabId, { url: newUrl });
+      }
     }
   }
+}
+
+chrome.webNavigation.onCompleted.addListener(cleanYouTubeUrl, {
+  url: [{ hostEquals: "www.youtube.com", pathEquals: "/watch" }]
+});
+
+chrome.webNavigation.onHistoryStateUpdated.addListener(cleanYouTubeUrl, {
+  url: [{ hostEquals: "www.youtube.com", pathEquals: "/watch" }]
 });
